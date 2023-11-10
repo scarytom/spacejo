@@ -1,4 +1,6 @@
 import {Component} from "preact";
+import sgf from "@sabaki/sgf";
+import GameTree from '@sabaki/immutable-gametree';
 
 class MyThingy extends Component {
     state = {
@@ -9,13 +11,15 @@ class MyThingy extends Component {
 
     componentDidMount() {
         console.log('Hello from a new <MyThingy> component!')
-        fetch("/test.json")
+        fetch("/33.sgf")
             .then(res => res.text())
             .then(
-                (result) => {
+                (content) => {
+                    let getId = (id => () => id++)(0)
+                    let rootNodes = sgf.parse(content, {getId})
                     this.setState({
                         isLoaded: true,
-                        data: result
+                        data: new GameTree({getId, root: rootNodes[0]})
                     });
                 },
                 (error) => {
@@ -37,7 +41,14 @@ class MyThingy extends Component {
         if (!isLoaded) {
             return <div>Loading...</div>;
         }
-        return (<div>{data}</div>);
+        const s = data.getSequence(0);
+        let p = "";
+        for (let x of s) {
+            // p = p + " " + Object.keys(x.data);
+            p = p + x.data.C
+        }
+        s.next()
+        return (<div>{p}</div>);
     }
 }
 
