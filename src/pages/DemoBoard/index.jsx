@@ -14,13 +14,22 @@ export function DemoBoard() {
 		[ 0, -1, -1,  0, -1,  1,  1,  1, 1],
 		[ 0,  0,  0,  0,  0, -1, -1, -1, 1],
 		[ 0,  0,  0,  0,  0,  0,  0, -1, 0]
-	]))
+	]));
 
 	const vertexClicked = (evt, vertex) => {
-		setBoard(board.makeMove(1, vertex))
-	}
+		try {
+			setBoard(board.makeMove(1, vertex, {
+				preventOverwrite: true,
+				preventSuicide: true,
+				preventKo: true
+			}));
+		} catch (e) {
+		}
+	};
 
 	return (
-		<Goban vertexSize={48} signMap={board.signMap} onVertexClick={vertexClicked} />
-	)
+		<Goban vertexSize={48}
+			   signMap={board.signMap}
+			   onVertexClick={vertexClicked} />
+	);
 }
