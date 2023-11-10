@@ -1,9 +1,10 @@
 import { Goban } from '@sabaki/shudan';
 import Board from '@sabaki/go-board';
 import '@sabaki/shudan/css/goban.css';
+import { useState } from 'preact/hooks';
 
 export function DemoBoard() {
-	const board = new Board([
+	const [board, setBoard] = useState(new Board([
 		[ 0,  0,  1,  0, -1, -1,  1,  0, 0],
 		[ 1,  0,  1, -1, -1,  1,  1,  1, 0],
 		[ 0,  0,  1, -1,  0,  1, -1, -1, 0],
@@ -13,8 +14,13 @@ export function DemoBoard() {
 		[ 0, -1, -1,  0, -1,  1,  1,  1, 1],
 		[ 0,  0,  0,  0,  0, -1, -1, -1, 1],
 		[ 0,  0,  0,  0,  0,  0,  0, -1, 0]
-	]);
+	]))
+
+	const vertexClicked = (evt, vertex) => {
+		setBoard(board.makeMove(1, vertex))
+	}
+
 	return (
-		<Goban vertexSize={48} signMap={board.signMap} />
-	);
+		<Goban vertexSize={48} signMap={board.signMap} onVertexClick={vertexClicked} />
+	)
 }
