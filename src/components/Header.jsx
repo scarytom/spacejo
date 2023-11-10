@@ -6,13 +6,13 @@ export function Header() {
 	return (
 		<header>
 			<nav>
-				<a href="/" class={url == '/' && 'active'}>
+				<a href="/" class={url === '/' && 'active'}>
 					Home
 				</a>
-				<a href="/board" className={url == '/board' && 'active'}>
-					Board
+				<a href="/demoboard" className={url === '/demoboard' && 'active'}>
+					Demo Board
 				</a>
-				<a href="/404" class={url == '/404' && 'active'}>
+				<a href="/404" class={url === '/404' && 'active'}>
 					404
 				</a>
 			</nav>
